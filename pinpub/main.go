@@ -29,14 +29,24 @@ func main() {
 	targetDirPtr := flag.String("targetDir", "./target", "path to the target directory.")
 	flag.Parse()
 
+	var server Server
 	config, err := getIPFSconfig()
 	if err != nil {
 		fmt.Printf("Unable to connect to the IPFS daemon: %s", err)
 		return
 	}
 
+	err = addWithPost()
+	if err != nil {
+		fmt.Printf("Unable to add: %s", err)
+		return
+	}
+
+	server.ipfs = config
+
 	parseDir(*targetDirPtr)
 
-	fmt.Printf("Starting vbeam-pinpub..\nServing at http://localhost:%s", PORT)
+	http.HandleFunc("/", server.Serve)
+	fmt.Printf("Starting vbeam-pinpub..\nServing at http://localhost%s", PORT)
 	http.ListenAndServe(*portPtr, nil)
 }
