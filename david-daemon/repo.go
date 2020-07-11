@@ -8,7 +8,7 @@ import (
 
 	config "github.com/ipfs/go-ipfs-config"
 
-	"github.com/ipfs/go-ipfs/plugin/loader" // This package is needed so that all the preloaded plugins are loaded automatically
+	"github.com/ipfs/go-ipfs/plugin/loader"
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 )
 
