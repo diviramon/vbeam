@@ -24,6 +24,10 @@ func setupPlugins(externalPluginsPath string) error {
 		return fmt.Errorf("Error initializing preloaded plugins: %s", err)
 	}
 
+	if err := plugins.Inject(); err != nil {
+		return fmt.Errorf("Error initializing plugins: %s", err)
+	}
+
 	return nil
 }
 
