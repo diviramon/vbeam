@@ -16,7 +16,7 @@ func main() {
 
 	// Spawn a node using the default path (~/.ipfs)
 	// fmt.Println("Spawning node on default repo")
-	// ipfs, err := spawnDefault(ctx) // in the future it should be ipfs instead of _
+	// ipfs, err := spawnDefault(ctx)
 	// if err != nil {
 	// 	fmt.Println("No IPFS repo available on the default path -", err)
 	// 	return
@@ -24,7 +24,7 @@ func main() {
 
 	// Spawn a node using a temporary repo
 	fmt.Println("Spawning node on a temporary repo")
-	ipfs, err := spawnEphemeral(ctx) // in the future it should be ipfs instead of _
+	ipfs, err := spawnEphemeral(ctx)
 	if err != nil {
 		panic(fmt.Errorf("failed to spawn ephemeral node: %s", err))
 	}
