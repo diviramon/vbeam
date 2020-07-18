@@ -14,7 +14,7 @@ func main() {
 		return
 	}
 
-	topic := Pinpoint{Mutex: &sync.Mutex{}}
+	topic := Pinpoint{mu: &sync.Mutex{}}
 
 	go WatchDir("", ipfs, &topic)
 

@@ -50,9 +50,10 @@ func WatchDir(path string, ipfs icore.CoreAPI, topic *Pinpoint) {
 
 		if cidDir.Cid() != topic.RootCID {
 			fmt.Println("updating the topic RootCID to ", cidDir.Cid())
-			topic.Mutex.Lock()
+			topic.mu.Lock()
 			topic.RootCID = cidDir.Cid()
-			topic.Mutex.Unlock()
+			topic.CreatedAt = time.Now()
+			topic.mu.Unlock()
 		}
 		time.Sleep(1 * time.Second)
 	}
