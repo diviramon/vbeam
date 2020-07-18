@@ -14,7 +14,7 @@ import (
 )
 
 // Creates an IPFS node and returns its coreAPI
-func createNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
+func CreateNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
 	// Open the repo
 	repo, err := fsrepo.Open(repoPath)
 	if err != nil {

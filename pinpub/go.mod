@@ -1,4 +1,4 @@
-module github.com/diviramon/vbeam/david-daemon
+module github.com/diviramon/vbeam/pinpub
 
 go 1.14
 
