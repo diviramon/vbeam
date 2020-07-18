@@ -3,9 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-
-	files "github.com/ipfs/go-ipfs-files"
-	icorepath "github.com/ipfs/interface-go-ipfs-core/path"
 )
 
 func main() {
@@ -15,41 +12,20 @@ func main() {
 	defer cancel()
 
 	// Spawn a node using the default path (~/.ipfs)
-	// fmt.Println("Spawning node on default repo")
-	// ipfs, err := spawnDefault(ctx)
-	// if err != nil {
-	// 	fmt.Println("No IPFS repo available on the default path -", err)
-	// 	return
-	// }
-
-	// Spawn a node using a temporary repo
-	fmt.Println("Spawning node on a temporary repo")
-	ipfs, err := spawnEphemeral(ctx)
+	fmt.Println("Spawning node on default repo")
+	ipfs, err := spawnDefault(ctx)
 	if err != nil {
-		panic(fmt.Errorf("failed to spawn ephemeral node: %s", err))
+		fmt.Println("No IPFS repo available on the default path -", err)
+		return
 	}
 
 	fmt.Println("IPFS node is running.")
 
 	// Adding a file
 	inputBasePath := "./target/"
-	inputPathFile := inputBasePath + "whitepaper.pdf"
-	inputPathDirectory := inputBasePath + "test-dir"
-
-	someFile, err := getUnixfsNode(inputPathFile)
-	if err != nil {
-		panic(fmt.Errorf("could not find the File: %s", err))
-	}
-
-	cidFile, err := ipfs.Unixfs().Add(ctx, someFile)
-	if err != nil {
-		panic(fmt.Errorf("could not add File: %s", err))
-	}
-
-	fmt.Printf("File added, its CID is: %s\n", cidFile.String())
 
 	// Adding a directory
-	someDir, err := getUnixfsNode(inputPathDirectory)
+	someDir, err := getUnixfsNode(inputBasePath)
 	if err != nil {
 		panic(fmt.Errorf("could not find the directory: %s", err))
 	}
@@ -85,23 +61,6 @@ func main() {
 	go connectToPeers(ctx, ipfs, bootstrapNodes)
 
 	fmt.Println("Connected to peer nodes as bootstrappers.")
-
-	// Retrieving a File
-	testCIDstr := "QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps" // ipfs whitepaper
-	outputPath := inputBasePath + "output-dir/whitepaper.pdf"
-	testCID := icorepath.New(testCIDstr)
-
-	rootNode, err := ipfs.Unixfs().Get(ctx, testCID)
-	if err != nil {
-		panic(fmt.Errorf("could not get the test file from the swarm"))
-	}
-
-	err = files.WriteTo(rootNode, outputPath)
-	if err != nil {
-		panic(fmt.Errorf("could not save the fetched CID: %s", err))
-	}
-
-	fmt.Printf("Test file retrieved and saved to: %s\n", outputPath)
 
 	fmt.Println("\nEsto es todo amigos!")
 }
