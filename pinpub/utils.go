@@ -67,17 +67,3 @@ func getUnixfsFile(path string) (files.File, error) {
 
 	return f, nil
 }
-
-func getUnixfsNode(path string) (files.Node, error) {
-	st, err := os.Stat(path)
-	if err != nil {
-		return nil, err
-	}
-
-	f, err := files.NewSerialFile(path, false, st)
-	if err != nil {
-		return nil, err
-	}
-
-	return f, err
-}
