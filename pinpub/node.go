@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 
 	config "github.com/ipfs/go-ipfs-config"
 	libp2p "github.com/ipfs/go-ipfs/core/node/libp2p"
@@ -13,8 +12,8 @@ import (
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 )
 
-// Creates an IPFS node and returns its coreAPI
-func CreateNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
+// createNode creates an IPFS node and returns its coreAPI
+func createNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
 	// Open the repo
 	repo, err := fsrepo.Open(repoPath)
 	if err != nil {
@@ -50,20 +49,4 @@ func spawnDefault(ctx context.Context) (icore.CoreAPI, error) {
 	}
 
 	return createNode(ctx, defaultPath)
-}
-
-// Spawns an ephimeral node using a tmp repo
-func spawnEphemeral(ctx context.Context) (icore.CoreAPI, error) {
-	if err := setupPlugins(""); err != nil {
-		return nil, err
-	}
-
-	// Create a Temporary Repo
-	repoPath, err := createTempRepo(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("Failed to create temp repo: %s", err)
-	}
-
-	// Spawn ephemeral IPFS node
-	return createNode(ctx, repoPath)
 }
