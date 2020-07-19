@@ -31,30 +31,33 @@ func getUnixfsNode(path string) (files.Node, error) {
 
 // WatchDir watches the direcotry and pushes the latest version of
 // the pinpoint to the topic channel
-func WatchDir(path string, ipfs icore.CoreAPI, topic *Pinpoint) {
-	if path == "" {
-		path = inputBasePath
-	}
+func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint) {
 
 	for {
-		// Adding a directory
-		someDir, err := getUnixfsNode(path)
-		if err != nil {
-			panic(fmt.Errorf("could not find the directory: %s", err))
-		}
 
-		cidDir, err := ipfs.Unixfs().Add(context.Background(), someDir)
-		if err != nil {
-			panic(fmt.Errorf("could not add directory: %s", err))
-		}
+		for label, val := range cfg.Topics {
+			topic, ok := topics[label]
+			if !ok {
+				panic(fmt.Errorf("no topic for the label=%s, bad", label))
+			}
 
-		if cidDir.Cid() != topic.RootCID {
-			fmt.Println("updating the topic RootCID to ", cidDir.Cid())
-			topic.mu.Lock()
-			topic.RootCID = cidDir.Cid()
-			topic.CreatedAt = time.Now()
-			topic.mu.Unlock()
+			// fmt.Printf("updating the topic=%s based on dir=%s\n", label, val.SrcDir)
+			someDir, err := getUnixfsNode(val.SrcDir)
+			if err != nil {
+				panic(fmt.Errorf("could not find the directory: %s", err))
+			}
+			cidDir, err := ipfs.Unixfs().Add(context.Background(), someDir)
+			if err != nil {
+				panic(fmt.Errorf("could not add directory: %s", err))
+			}
+			if cidDir.Cid() != topic.RootCID {
+				fmt.Printf("updating the topic %s RootCID to %s\n", label, cidDir.Cid())
+				topic.mu.Lock()
+				topic.RootCID = cidDir.Cid()
+				topic.CreatedAt = time.Now()
+				topic.mu.Unlock()
+			}
 		}
-		time.Sleep(1 * time.Second)
+		time.Sleep(2 * time.Second)
 	}
 }
