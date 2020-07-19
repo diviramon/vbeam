@@ -1,24 +1,31 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"sync"
 )
 
 func main() {
-
-	ipfs, err := spawnDefault(context.Background())
+	cfg, err := loadConfig()
 	if err != nil {
-		fmt.Println("No IPFS repo available on the default path -", err)
+		fmt.Println("unable to load pinpub config: ", err)
 		return
 	}
 
-	topic := Pinpoint{mu: &sync.Mutex{}}
+	ipfs, err := spawnIPFS(cfg.IpfsRepoPath)
+	if err != nil {
+		fmt.Println("No IPFS repo spawn -", err)
+		return
+	}
 
-	go WatchDir("", ipfs, &topic)
+	topics := make(map[string]*Pinpoint)
+	for label := range cfg.Topics {
+		topics[label] = &Pinpoint{mu: &sync.Mutex{}}
+	}
 
-	ServePinpoint(&topic)
+	go WatchDir(cfg, ipfs, topics)
+
+	ServePinpoint(topics)
 
 	fmt.Println("\nEsto es todo amigos!")
 }

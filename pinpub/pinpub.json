@@ -1,0 +1,8 @@
+{
+    "name": "PinPub Config",
+    "ipfsRepoPath": "./ipfs-repo",
+    "topics": {
+        "dumah": {"srcDir": "./topic-dumah"},
+        "dickens": {"srcDir": "./topic-dickens"}
+    }
+}
