@@ -4,7 +4,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p-core/peer"
 )
 
@@ -15,7 +14,7 @@ type Publisher struct {
 }
 
 type Pinpoint struct {
-	RootCID   cid.Cid   `json:"cid"`
+	RootCID   string    `json:"cid"`
 	CreatedAt time.Time `json:"createdAt"`
 	mu        *sync.Mutex
 }

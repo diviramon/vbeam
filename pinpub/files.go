@@ -9,19 +9,19 @@ import (
 	"os"
 	"time"
 
-	files "github.com/ipfs/go-ipfs-files"
+	go_ipfs_files "github.com/ipfs/go-ipfs-files"
 	icore "github.com/ipfs/interface-go-ipfs-core"
 )
 
 const inputBasePath = "./target/"
 
-func getUnixfsNode(path string) (files.Node, error) {
+func getUnixfsNode(path string) (go_ipfs_files.Node, error) {
 	st, err := os.Stat(path)
 	if err != nil {
 		return nil, err
 	}
 
-	f, err := files.NewSerialFile(path, false, st)
+	f, err := go_ipfs_files.NewSerialFile(path, false, st)
 	if err != nil {
 		return nil, err
 	}
@@ -52,10 +52,10 @@ func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint) {
 			if err != nil {
 				panic(fmt.Errorf("could not add directory: %s", err))
 			}
-			if cidDir.Cid() != topic.RootCID {
+			if cidDir.Cid().String() != topic.RootCID {
 				fmt.Printf("updating the topic %s RootCID to %s\n", label, cidDir.Cid())
 				topic.mu.Lock()
-				topic.RootCID = cidDir.Cid()
+				topic.RootCID = cidDir.Cid().String()
 				topic.CreatedAt = time.Now()
 				topic.mu.Unlock()
 			}
