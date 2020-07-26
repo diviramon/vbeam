@@ -23,9 +23,7 @@ func main() {
 
 	topics := make(map[string]*Pinpoint)
 	for label := range cfg.Topics {
-		topics[label] = &Pinpoint{
-			mu: &sync.Mutex{}
-		}
+		topics[label] = &Pinpoint{mu: &sync.Mutex{}}
 	}
 
 	go WatchDir(cfg, ipfs, topics)
