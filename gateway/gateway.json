@@ -1,0 +1,7 @@
+{
+    "name": "Gateway Config",
+    "ipfsRepoPath": "./ipfs-repo",
+    "topicSubscriptions": {
+        "localhost:8080/dumah": {}
+    }
+}

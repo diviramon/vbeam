@@ -1,4 +1,4 @@
-package main
+package ipfsglue
 
 import (
 	"context"
@@ -36,8 +36,8 @@ func createNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
 	return coreapi.NewCoreAPI(node)
 }
 
-// Spawns a node on the default repo location
-func spawnIPFS(ipfsRepoPath string) (icore.CoreAPI, error) {
+// SpawnIPFS spawns a node on the default repo location
+func SpawnIPFS(ipfsRepoPath string) (icore.CoreAPI, error) {
 	if err := setupPlugins(ipfsRepoPath); err != nil {
 		return nil, err
 	}

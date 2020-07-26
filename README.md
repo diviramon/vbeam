@@ -19,3 +19,15 @@ The decentralized content delivery based on IPFS for internet service providers 
 - *Vbeam gateway*:  thanks to libp2p by the Protocol Labs, and the open source go-ipfs code, as well as some familiarity of the team with that code, it is realistic to build something like that relatively quickly (workload estimate: 80 hours).
 
 - *Vbeam routing table*: let's build this with a distributed hash table based on the Ethereum smart contracts; while there are probability other good alternatives to tackle the same problem without overengineering this, this take will be more aligned for this given hackathon;  we assume that the ISPs who control a given range of IP addresses have a key that makes them verifiably publish the routing recommendation for a given peerlist's data object  (workload estimate: TBD).
+
+
+## Installation
+
+This thing is a work a progress.
+
+Create a repo for each service with: 
+
+```bash
+IPFS_PATH=./env/pinpub/ipfs-repo ipfs init 
+IPFS_PATH=./env/gateway/ipfs-repo ipfs init 
+```
