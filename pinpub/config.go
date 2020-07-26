@@ -7,6 +7,7 @@ import (
 )
 
 type config struct {
+	Name         string `json:"name"`
 	IpfsRepoPath string `json:"ipfsRepoPath"`
 	Topics       map[string]struct {
 		SrcDir string `json:"srcDir"`

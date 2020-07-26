@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"sync"
 
@@ -21,14 +22,23 @@ func main() {
 		return
 	}
 
+	key, err := ipfs.Key().Self(context.Background())
+	if err != nil {
+		fmt.Println("Could not get the node key -", err)
+		return
+	}
+
+	publisher := Publisher{PubID: cfg.Name, NodeKey: key.ID(), Topics: make(map[string]string)}
 	topics := make(map[string]*Pinpoint)
+
 	for label := range cfg.Topics {
+		publisher.Topics[label] = "/" + label
 		topics[label] = &Pinpoint{mu: &sync.Mutex{}}
 	}
 
 	go WatchDir(cfg, ipfs, topics)
 
-	ServePinpoint(topics)
+	ServePinpoint(publisher, topics)
 
 	fmt.Println("\nEsto es todo amigos!")
 }

@@ -1,5 +1,5 @@
 {
-    "name": "PinPub Config",
+    "name": "BookClub",
     "ipfsRepoPath": "./ipfs-repo",
     "topics": {
         "dumah": {"srcDir": "./topic-dumah"},
