@@ -47,6 +47,8 @@ func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint) {
 				panic(fmt.Errorf("could not find the directory: %s", err))
 			}
 			cidDir, err := ipfs.Unixfs().Add(context.Background(), someDir)
+			someDir.Close()
+
 			if err != nil {
 				panic(fmt.Errorf("could not add directory: %s", err))
 			}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 )
 
@@ -25,6 +24,5 @@ func loadConfig() (*config, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("config is now %#v\n", cfg)
 	return &cfg, nil
 }
