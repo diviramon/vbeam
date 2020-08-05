@@ -25,13 +25,15 @@ func GetListTopicsHandler(publisher Publisher) func(w http.ResponseWriter, r *ht
 	}
 }
 
+const Port = ":8080"
+
 func ServePinpoint(publisher Publisher, topics map[string]*Pinpoint) {
-	fmt.Println("starting the HTTP server...")
+	fmt.Printf("starting the HTTP server at localhost:%s...\n", Port)
 	http.HandleFunc("/", GetListTopicsHandler(publisher))
 
 	for label, val := range topics {
-		http.HandleFunc("/"+label, GetTopicHandler(label, val))
+		http.HandleFunc("/topic/"+label, GetTopicHandler(label, val))
 	}
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(Port, nil))
 }

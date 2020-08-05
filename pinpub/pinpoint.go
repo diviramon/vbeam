@@ -13,6 +13,9 @@ type Publisher struct {
 	Topics  map[string]string `json: "Topics"`
 }
 
+// Pinpoint is a given topic message,
+// that is, it references the root CID of the IPFS object that
+// contains the current state of the topic
 type Pinpoint struct {
 	RootCID   string    `json:"cid"`
 	CreatedAt time.Time `json:"createdAt"`

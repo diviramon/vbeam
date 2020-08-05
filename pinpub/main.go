@@ -32,7 +32,7 @@ func main() {
 	topics := make(map[string]*Pinpoint)
 
 	for label := range cfg.Topics {
-		publisher.Topics[label] = "/" + label
+		publisher.Topics[label] = "/topics/" + label
 		topics[label] = &Pinpoint{mu: &sync.Mutex{}}
 	}
 
