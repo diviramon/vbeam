@@ -55,9 +55,9 @@ func main() {
 				}
 				topic.RootCID = pp.RootCID
 				topic.CreatedAt = time.Now()
-				fmt.Printf("updated topic %s...\n", label)
+				fmt.Printf("updated topic %s to root CID %s...\n", label, pp.RootCID)
 			}
 		}
-		time.Sleep(2 * time.Second)
+		time.Sleep(time.Second)
 	}
 }

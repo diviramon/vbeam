@@ -31,7 +31,7 @@ func getUnixfsNode(path string) (go_ipfs_files.Node, error) {
 
 // WatchDir watches the direcotry and pushes the latest version of
 // the pinpoint to the topic channel
-func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint) {
+func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint, cid2topic map[string]string) {
 
 	for {
 
@@ -41,7 +41,6 @@ func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint) {
 				panic(fmt.Errorf("no topic for the label=%s, bad", label))
 			}
 
-			// fmt.Printf("updating the topic=%s based on dir=%s\n", label, val.SrcDir)
 			someDir, err := getUnixfsNode(val.SrcDir)
 			if err != nil {
 				panic(fmt.Errorf("could not find the directory: %s", err))
@@ -55,11 +54,13 @@ func WatchDir(cfg *config, ipfs icore.CoreAPI, topics map[string]*Pinpoint) {
 			if cidDir.Cid().String() != topic.RootCID {
 				fmt.Printf("updating the topic %s RootCID to %s\n", label, cidDir.Cid())
 				topic.mu.Lock()
-				topic.RootCID = cidDir.Cid().String()
+				cidString := cidDir.Cid().String()
+				topic.RootCID = cidString
+				cid2topic[cidString] = label
 				topic.CreatedAt = time.Now()
 				topic.mu.Unlock()
 			}
 		}
-		time.Sleep(2 * time.Second)
+		time.Sleep(time.Second)
 	}
 }

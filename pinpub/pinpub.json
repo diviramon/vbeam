@@ -2,7 +2,19 @@
     "name": "BookClub",
     "ipfsRepoPath": "./ipfs-repo",
     "topics": {
-        "dumah": {"srcDir": "./topic-dumah"},
+        "dumah": {
+            "srcDir": "./topic-dumah",
+            "gateways": {
+                "vbeam-gateway.mr-burns-isp1": {
+                    "destination": "127.0.0.0",
+                    "mask": "255.0.0.0"
+                },
+                "vbeam-gateway.texas-guy-isp2": {
+                    "destination": "[::1]",
+                    "mask": "xxxx::"
+                }
+            }
+        },
         "dickens": {"srcDir": "./topic-dickens"}
     }
 }

@@ -2,7 +2,7 @@
     "name": "Gateway Config",
     "ipfsRepoPath": "./ipfs-repo",
     "subscriptions": {
-        "localhost:8080/dumah": {
+        "localhost:8087/topic/dumah": {
             "timeToLive": 3
         }
     }

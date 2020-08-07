@@ -29,16 +29,18 @@ func main() {
 	}
 
 	publisher := Publisher{PubID: cfg.Name, NodeKey: key.ID(), Topics: make(map[string]string)}
+
 	topics := make(map[string]*Pinpoint)
+	cid2topic := make(map[string]string)
 
 	for label := range cfg.Topics {
-		publisher.Topics[label] = "/topics/" + label
+		publisher.Topics[label] = "/topic/" + label
 		topics[label] = &Pinpoint{mu: &sync.Mutex{}}
 	}
 
-	go WatchDir(cfg, ipfs, topics)
+	go WatchDir(cfg, ipfs, topics, cid2topic)
 
-	ServePinpoint(publisher, topics)
+	ServePinpoint(cfg, publisher, topics, cid2topic)
 
 	fmt.Println("\nEsto es todo amigos!")
 }
