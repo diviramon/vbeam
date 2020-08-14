@@ -7,6 +7,7 @@ import (
 	"github.com/ipfs/go-ipfs/plugin/loader"
 )
 
+// setupPlugins loads the plugins found in the input
 func setupPlugins(externalPluginsPath string) error {
 	// Load external plugins
 	plugins, err := loader.NewPluginLoader(filepath.Join(externalPluginsPath, "plugins"))

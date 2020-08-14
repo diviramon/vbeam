@@ -7,6 +7,9 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 )
 
+// Publisher is a given publisher,
+// that is, it reference the ID of the IPFS Node and
+// its list of topics.
 type Publisher struct {
 	PubID   string            `json:"PubID"`
 	NodeKey peer.ID           `json: "NodeKey"`

@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// GetTopicHandler reads the json configuration for the topic and serves it
 func GetTopicHandler(label string, topic *Pinpoint) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		topic.mu.Lock()
@@ -17,6 +18,7 @@ func GetTopicHandler(label string, topic *Pinpoint) func(w http.ResponseWriter, 
 	}
 }
 
+// GetListTopicsHandler reads the list of topics for a given publisher
 func GetListTopicsHandler(publisher Publisher) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -25,8 +27,10 @@ func GetListTopicsHandler(publisher Publisher) func(w http.ResponseWriter, r *ht
 	}
 }
 
+// Port to serve the http request
 const Port = ":8087"
 
+// ServePinpoint serves the publisher list of topics and displays each topic individually
 func ServePinpoint(cfg *config, publisher Publisher, topics map[string]*Pinpoint, cid2topic map[string]string) {
 	fmt.Printf("starting the HTTP server at localhost%s...\n", Port)
 	http.HandleFunc("/", GetListTopicsHandler(publisher))
