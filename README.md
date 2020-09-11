@@ -2,6 +2,8 @@
 
 The decentralized content delivery based on IPFS for internet service providers (ISPs).
 
+[HackFS Showcase Link](https://hack.ethglobal.co/showcase/voronoibeam-recmYfuu73aADOldW)
+
 ## Motivation
 
 At its core,  TCP/IP works like a telephone network: it enables a point-to-point conversation between two network nodes. This works amazingly for many things but is not a good fit for other things. For content delivery, IPFS offers an alternative model that is unambigously technically superior: content-addressable networking. 
